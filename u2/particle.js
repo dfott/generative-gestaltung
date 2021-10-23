@@ -46,10 +46,10 @@ class Particle {
 
   show() {
     // stroke(0, 5);
-    stroke(this.color);
-    strokeWeight(4);
+    leavesCanvas.stroke(this.color);
+    leavesCanvas.strokeWeight(4);
     // point(this.pos.x, this.pos.y);
-    line(this.pos.x, this.pos.y, this.previousePos.x, this.previousePos.y);
+    leavesCanvas.line(this.pos.x, this.pos.y, this.previousePos.x, this.previousePos.y);
   }
 
   follow(zoff) {

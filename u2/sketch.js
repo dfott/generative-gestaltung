@@ -12,8 +12,11 @@ let count = 0;
 let forcefieldActive = false;
 let sound;
 
+let leavesCanvas;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  leavesCanvas = createGraphics(windowWidth, windowHeight);
   cols = floor(width / scl);
   rows = floor(height / scl);
   flowfield = new Array(cols * rows);
@@ -61,8 +64,10 @@ function mousePressed() {
 }
 
 function draw() {
+  background("lightblue");
+  leavesCanvas.background(color(0, 0, 0, 0))
+  image(leavesCanvas, 0, 0)
   if (!forcefieldActive) {
-    background("lightblue");
     noStroke();
     textSize(5);
     fill("darkblue");
@@ -74,7 +79,11 @@ function draw() {
     );
   }
   tree.forEach((tree) => {
+    if(forcefieldActive) {
+    tree.show(zoff);
+    } else {
     tree.show();
+    }
   });
   leaves.forEach((leaf) => {
     // fill(255, 0, 100);
@@ -90,18 +99,18 @@ function draw() {
   // fill("green");
   // textSize(10);
   // text(floor(frameRate()), 10, 20);)
-  tree.forEach((tree) => {
-    tree.show();
-  });
-  leaves.forEach((leaf) => {
-    // fill(255, 0, 100);
-    // ellipse(leave.x, leave.y, 8, 8);
-    leaf.show();
-    if (forcefieldActive) {
-      leaf.follow(zoff);
-      leaf.update();
-    }
-  });
+  // tree.forEach((tree) => {
+  //   tree.show();
+  // });
+  // leaves.forEach((leaf) => {
+  //   // fill(255, 0, 100);
+  //   // ellipse(leave.x, leave.y, 8, 8);
+  //   leaf.show();
+  //   if (forcefieldActive) {
+  //     leaf.follow(zoff);
+  //     leaf.update();
+  //   }
+  // });
   // fill("black");
   // rect(5, 5, 20, 20);
   // fill("green");

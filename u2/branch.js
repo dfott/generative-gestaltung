@@ -5,10 +5,22 @@ class Branch {
     this.finished = false;
   }
 
-  show() {
+  show(zoff) {
     stroke(101);
     strokeWeight(1);
+    if(zoff) {
+      const branchLength = p5.Vector.sub(this.end, this.begin).mag();
+      const rand = map(noise(this.end.x, this.end.y, zoff), 0, 1, -branchLength/200, branchLength/200);
+      this.end.add(rand);
     line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+    } else {
+    line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+    }
+  }
+
+  jitter() {
+    const rand = map(noise(this.end.x, this.end.y, zoff), 0, 1, -1, 1);
+    this.end.add(rand);
   }
 
   branchA() {
