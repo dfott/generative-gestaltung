@@ -1,28 +1,29 @@
 class Particle {
   possibleColors = [
-    color(236, 104, 22, 4),
-    color(240, 131, 21, 4),
-    color(255, 175, 75, 4),
+    color(236, 104, 22, 20),
+    color(240, 131, 21, 20),
+    color(255, 175, 75, 20),
   ];
 
-  constructor() {
-    this.pos = createVector(random(width), random(height));
+  constructor(x, y) {
+    // this.pos = createVector(random(width), random(height));
+    this.pos = createVector(x, y);
     this.previousePos = this.pos.copy();
     this.vel = p5.Vector.random2D();
     this.acc = createVector(0, 0);
-    this.maxSpeed = 6;
+    this.maxSpeed = 0.1;
     this.color = this.possibleColors[floor(random(3))];
   }
 
   updateColor() {
-    if (this.color.levels[0] >= 20) {
-      this.color.levels[0] = this.color.levels[0] - 0.1;
+    if (this.color.levels[0] >= 45) {
+      this.color.levels[0] = this.color.levels[0] - 0.025;
     }
-    if (this.color.levels[1] >= 20) {
-      this.color.levels[1] = this.color.levels[1] - 0.1;
+    if (this.color.levels[1] >= 45) {
+      this.color.levels[1] = this.color.levels[1] - 0.025;
     }
-    if (this.color.levels[2] >= 20) {
-      this.color.levels[2] = this.color.levels[2] - 0.1;
+    if (this.color.levels[2] >= 45) {
+      this.color.levels[2] = this.color.levels[2] - 0.025;
     }
   }
 
@@ -34,6 +35,9 @@ class Particle {
     this.acc.mult(0);
     this.updateColor();
     this.edges();
+    if (this.maxSpeed < 5) {
+      this.maxSpeed += 0.0075;
+    }
   }
 
   applyForce(force) {
@@ -43,7 +47,7 @@ class Particle {
   show() {
     // stroke(0, 5);
     stroke(this.color);
-    strokeWeight(1);
+    strokeWeight(4);
     // point(this.pos.x, this.pos.y);
     line(this.pos.x, this.pos.y, this.previousePos.x, this.previousePos.y);
   }
