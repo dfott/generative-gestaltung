@@ -6,12 +6,23 @@ const stumpLength = 25;
 let clickCount = 0;
 let isForcefieldActive = false;
 let sound;
+let leafHeadImages;
 
+let leafHeadCanvas;
 let leavesCanvas;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   leavesCanvas = createGraphics(windowWidth, windowHeight);
+  leafHeadCanvas = createGraphics(windowWidth, windowHeight);
+
+  leafHeadImages = [
+    loadImage("assets/leaf1.svg"),
+    loadImage("assets/leaf2.svg"),
+    loadImage("assets/leaf3.svg"),
+    loadImage("assets/leaf4.svg"),
+    loadImage("assets/leaf5.svg"),
+  ];
 
   sound = loadSound("assets/wind.wav");
 
@@ -80,6 +91,8 @@ function draw() {
       tree.show();
     }
   });
+  image(leafHeadCanvas, 0, 0);
+  leafHeadCanvas.clear();
   leaves.forEach((leaf) => {
     leaf.show();
     if (isForcefieldActive) {
@@ -88,4 +101,14 @@ function draw() {
     }
   });
   zoff += 0.01;
+
+  // push();
+  // const a = createVector(50, 50);
+  // const b = createVector(75, 25);
+  // translate(100, 100);
+  // rotate(p5.Vector.sub(b, a).heading());
+  // imageMode(CENTER);
+  // image(leafHeadImages[0], 0, 0, 100, 100);
+  // pop();
+  // point(100, 100);
 }

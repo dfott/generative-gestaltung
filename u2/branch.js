@@ -22,8 +22,8 @@ class Branch {
       noise(this.end.x, this.end.y, zoff),
       0,
       1,
-      -branchLength / 400,
-      branchLength / 400
+      -branchLength / 500,
+      branchLength / 500
     );
   }
 

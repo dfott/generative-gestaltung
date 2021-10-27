@@ -12,6 +12,7 @@ class Leaf {
     this.acc = createVector(0, 0);
     this.maxSpeed = 0.1;
     this.color = this.possibleColors[floor(random(3))];
+    this.image = leafHeadImages[floor(random(leafHeadImages.length))];
   }
 
   updateColor() {
@@ -41,6 +42,13 @@ class Leaf {
   }
 
   show() {
+    leafHeadCanvas.push();
+    leafHeadCanvas.translate(this.pos.x, this.pos.y);
+    leafHeadCanvas.rotate(p5.Vector.sub(this.pos, this.previousePos).heading());
+    leafHeadCanvas.imageMode(CENTER);
+    leafHeadCanvas.image(this.image, 0, 0, 7.5, 7.5);
+    leafHeadCanvas.pop();
+
     leavesCanvas.stroke(this.color);
     leavesCanvas.strokeWeight(4);
     leavesCanvas.line(
