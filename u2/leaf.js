@@ -1,4 +1,4 @@
-class Particle {
+class Leaf {
   possibleColors = [
     color(236, 104, 22, 20),
     color(240, 131, 21, 20),
@@ -6,7 +6,6 @@ class Particle {
   ];
 
   constructor(x, y) {
-    // this.pos = createVector(random(width), random(height));
     this.pos = createVector(x, y);
     this.previousePos = this.pos.copy();
     this.vel = p5.Vector.random2D();
@@ -16,15 +15,12 @@ class Particle {
   }
 
   updateColor() {
-    if (this.color.levels[0] >= 45) {
-      this.color.levels[0] = this.color.levels[0] - 0.025;
-    }
-    if (this.color.levels[1] >= 45) {
-      this.color.levels[1] = this.color.levels[1] - 0.025;
-    }
-    if (this.color.levels[2] >= 45) {
-      this.color.levels[2] = this.color.levels[2] - 0.025;
-    }
+    this.color.levels = this.color.levels.map((level) => {
+      if (level >= 45) {
+        return level - 0.025;
+      }
+      return level;
+    });
   }
 
   update() {
@@ -45,11 +41,14 @@ class Particle {
   }
 
   show() {
-    // stroke(0, 5);
     leavesCanvas.stroke(this.color);
     leavesCanvas.strokeWeight(4);
-    // point(this.pos.x, this.pos.y);
-    leavesCanvas.line(this.pos.x, this.pos.y, this.previousePos.x, this.previousePos.y);
+    leavesCanvas.line(
+      this.pos.x,
+      this.pos.y,
+      this.previousePos.x,
+      this.previousePos.y
+    );
   }
 
   follow(zoff) {
@@ -57,11 +56,6 @@ class Particle {
     const v = p5.Vector.fromAngle(angle);
     v.setMag(1);
     this.applyForce(v);
-    // const x = floor(this.pos.x / scl);
-    // const y = floor(this.pos.y / scl);
-    // const index = x + y * cols;
-    // const force = vectors[index];
-    // this.applyForce(force);
   }
 
   updatePrev() {
