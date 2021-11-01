@@ -1,4 +1,8 @@
+/**
+ * Base class used to display a Leaf and its tail.
+ */
 class Leaf {
+  // possible colors, that the tail of a leaf can have. Will be chosen randomly
   possibleColors = [
     color(236, 104, 22, 20),
     color(240, 131, 21, 20),
@@ -12,13 +16,17 @@ class Leaf {
     this.acc = createVector(0, 0);
     this.maxSpeed = 0.1;
     this.color = this.possibleColors[floor(random(3))];
+    // this image will be drawn to display the leaf head
     this.image = leafHeadImages[floor(random(leafHeadImages.length))];
   }
 
+  /**
+   * Reduces the rgb values for the current color by 0.025, if they are not below a certain threshold.
+   */
   updateColor() {
     this.color.levels = this.color.levels.map((level) => {
-      if (level >= 45) {
-        return level - 0.025;
+      if (level >= 35) {
+        return level - 0.03;
       }
       return level;
     });
@@ -32,7 +40,7 @@ class Leaf {
     this.acc.mult(0);
     this.updateColor();
     this.edges();
-    if (this.maxSpeed < 5) {
+    if (this.maxSpeed < 8) {
       this.maxSpeed += 0.0075;
     }
   }
@@ -46,11 +54,11 @@ class Leaf {
     leafHeadCanvas.translate(this.pos.x, this.pos.y);
     leafHeadCanvas.rotate(p5.Vector.sub(this.pos, this.previousePos).heading());
     leafHeadCanvas.imageMode(CENTER);
-    leafHeadCanvas.image(this.image, 0, 0, 7.5, 7.5);
+    leafHeadCanvas.image(this.image, 0, 0, 35, 35);
     leafHeadCanvas.pop();
 
     leavesCanvas.stroke(this.color);
-    leavesCanvas.strokeWeight(4);
+    leavesCanvas.strokeWeight(20);
     leavesCanvas.line(
       this.pos.x,
       this.pos.y,
@@ -59,6 +67,10 @@ class Leaf {
     );
   }
 
+  /**
+   * Simulate a forcefield by calculating a value using perlin noise. This will be used as a force to move the leaf
+   * @param {number} zoff - the current z-offset
+   */
   follow(zoff) {
     const angle = noise(this.pos.x / 200, this.pos.y / 200, zoff) * TWO_PI * 4;
     const v = p5.Vector.fromAngle(angle);
