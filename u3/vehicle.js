@@ -1,20 +1,19 @@
 class Vehicle {
   constructor(x, y) {
-    // this.pos = createVector(x, y);
-    this.pos = createVector(random(width), random(height));
-    this.target = createVector(x, y);
-    this.vel = p5.Vector.random2D();
+    this.pos = createVector(x, y);
+    this.target = this.pos.copy();
+    this.vel = createVector();
     this.acc = createVector();
-    this.r = 8;
-    this.maxspeed = 10;
-    this.maxforce = 1;
+    this.maxspeed = 5;
+    this.maxforce = 0.5;
   }
 
   behaviors() {
-    const arrive = this.arrive(this.target);
-    this.applyForce(arrive);
 
-    arrive.mult(1);
+      const arrive = this.arrive();
+      arrive.mult(1);
+      this.applyForce(arrive);
+
 
     const mouse = createVector(mouseX, mouseY);
     const flee = this.flee(mouse);
@@ -24,8 +23,8 @@ class Vehicle {
     this.applyForce(flee);
   }
 
-  arrive(target) {
-    const desired = p5.Vector.sub(target, this.pos);
+  arrive() {
+    const desired = p5.Vector.sub(this.target, this.pos);
     const d = desired.mag();
     let speed = this.maxspeed;
     if (d < 100) {
@@ -40,7 +39,10 @@ class Vehicle {
   flee(target) {
     const desired = p5.Vector.sub(target, this.pos);
     const d = desired.mag();
-    if (d < 50) {
+    const dx = abs(target.x - this.pos.x);
+    const dy = abs(target.y - this.pos.y);
+    const tdy = abs(target.y - this.target.y);
+    if (dx < 60 && dx > -60 && dy < (1.25*tdy) && dy > -(1.25*tdy)) {
       desired.setMag(this.maxspeed);
       desired.mult(-1);
       const steer = p5.Vector.sub(desired, this.vel);
@@ -52,18 +54,27 @@ class Vehicle {
   }
 
   applyForce(f) {
-    this.acc.add(f);
+    this.acc.add(createVector(0, f.y));
   }
 
-  update() {
+  update(begin, end) {
     this.pos.add(this.vel);
+    begin.add(this.vel)
+    end.add(this.vel)
     this.vel.add(this.acc);
     this.acc.mult(0);
   }
 
   show() {
     stroke(255);
-    strokeWeight(this.r);
-    point(this.pos.x, this.pos.y);
+    strokeWeight(3);
+    line(
+      this.begin.x,
+      this.begin.y,
+      this.end.x,
+      this.end.y
+    )
+    // point(this.pos.x, this.pos.y);
+
   }
 }

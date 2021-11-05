@@ -7,10 +7,10 @@ class Letter {
       if (pt1 && pt2) {
         this.connections.push(
           new Connection(createVector(pt1.x, pt1.y), createVector(pt2.x, pt2.y))
+          // new Vehicle(createVector(pt1.x, pt1.y), createVector(pt2.x, pt2.y))
         );
       }
     }
-    console.log(this.connections);
   }
 
   show() {
@@ -40,6 +40,8 @@ class Letter {
     }
 
     this.connections.forEach((c) => {
+      c.behaviors();
+      c.update();
       c.show();
     });
   }
@@ -47,13 +49,34 @@ class Letter {
 
 class Connection {
   constructor(begin, end) {
-    this.begin = begin;
-    this.end = end;
+    // this.begin = new Vehicle(begin.x, begin.y);
+    // this.end = new Vehicle(end.x, end.y);
+    this.begin = begin.copy();
+    this.end = end.copy();
+
+    const dVec = p5.Vector.sub(end, begin);
+    this.dir = dVec.copy()
+    this.dir.mult(0.5)
+    dVec.mult(0.5);
+    const center = p5.Vector.add(begin, dVec);
+    this.vehicle = new Vehicle(center.x, center.y);
+  }
+
+  behaviors() {
+    this.vehicle.behaviors();
+  }
+
+  update() {
+    this.vehicle.update(this.begin, this.end);
   }
 
   show() {
     stroke(0, 255, 0);
     strokeWeight(3);
-    line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+    // point(this.vehicle.pos.x, this.vehicle.pos.y)
+    // line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+    const begin = p5.Vector.sub(this.vehicle.pos, this.dir);
+    const end = p5.Vector.add(this.vehicle.pos, this.dir);
+    line(begin.x, begin.y, end.x, end.y);
   }
 }

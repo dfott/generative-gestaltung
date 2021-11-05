@@ -7,6 +7,8 @@ function preload() {
   font = loadFont("RobotoMono-Regular.ttf");
 }
 
+let conns = [];
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(51);
@@ -17,35 +19,33 @@ function setup() {
   //   text("train", 100, 200);
 
   const chars = "train".split("");
+  // const chars = "t".split("");
   let count = 0;
   chars.forEach((c) => {
-    points = font.textToPoints(c, 25 + count, 200);
+    points = font.textToPoints(c, 200 + count, height / 2);
     count += 125;
     letters.push(new Letter(points, "blue"));
-    // points.forEach((pt) => {
-    // stroke(0, 255, 0);
-    // strokeWeight(4);
-    // point(pt.x, pt.y);
-    //   vehicles.push(new Vehicle(pt.x, pt.y));
-    // });
   });
-  //   points = font.textToPoints("train", 100, 200);
-  //   points.forEach((pt) => {
-  //     // stroke(0, 255, 0);
-  //     // strokeWeight(4);
-  //     // point(pt.x, pt.y);
-  //     vehicles.push(new Vehicle(pt.x, pt.y));
-  //   });
+  conns.push(
+    new Connection(createVector(200, 200), createVector(200, 230))
+  );
+  conns.push(
+    new Connection(createVector(200, 250), createVector(200, 280))
+  );
+
 }
 
 function draw() {
   background(51);
+  stroke('lightblue')
+  noFill()
+  // ellipse(mouseX, mouseY, 170, 170)
   letters.forEach((letter) => {
     letter.show();
   });
-  //   vehicles.forEach((v) => {
-  //     v.update();
-  //     v.behaviors();
-  //     v.show();
-  //   });
+  // conns.forEach(c => {
+  //   c.behaviors();
+  //   c.update();
+  //   c.show();
+  // })
 }
