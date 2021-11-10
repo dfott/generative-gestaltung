@@ -1,6 +1,7 @@
 class Letter {
-  constructor(points) {
+  constructor(points, color) {
     this.connections = [];
+    this.color = color;
     for (let i = 0; i < points.length; i += 2) {
       const pt1 = points[i];
       const pt2 = points[i + 1];
@@ -13,7 +14,16 @@ class Letter {
     }
   }
 
-  show() {
+  fleeScreen(fleeScreen) {
+    console.log("letter flee", fleeScreen);
+    this.connections.forEach((c) => c.fleeScreen(fleeScreen));
+  }
+
+  isOffscreen() {
+    return this.connections.every((c) => c.isOffscreen());
+  }
+
+  show(hide) {
     const mouse = createVector(mouseX, mouseY);
     const dist = this.connections.find((c) => {
       const d1 = p5.Vector.sub(mouse, c.begin);
@@ -40,9 +50,12 @@ class Letter {
     }
 
     this.connections.forEach((c) => {
+      stroke(this.color);
       c.behaviors();
       c.update();
-      c.show();
+      if (!hide) {
+        c.show();
+      }
     });
   }
 }
@@ -55,15 +68,23 @@ class Connection {
     this.end = end.copy();
 
     const dVec = p5.Vector.sub(end, begin);
-    this.dir = dVec.copy()
-    this.dir.mult(0.5)
+    this.dir = dVec.copy();
+    this.dir.mult(0.5);
     dVec.mult(0.5);
     const center = p5.Vector.add(begin, dVec);
     this.vehicle = new Vehicle(center.x, center.y);
   }
 
+  fleeScreen(fleeScreen) {
+    this.vehicle.fleeScreen(fleeScreen);
+  }
+
   behaviors() {
     this.vehicle.behaviors();
+  }
+
+  isOffscreen() {
+    return this.vehicle.isOffscreen();
   }
 
   update() {
@@ -71,7 +92,7 @@ class Connection {
   }
 
   show() {
-    stroke(0, 255, 0);
+    // stroke(0, 255, 0);
     strokeWeight(3);
     // point(this.vehicle.pos.x, this.vehicle.pos.y)
     // line(this.begin.x, this.begin.y, this.end.x, this.end.y);
