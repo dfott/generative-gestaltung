@@ -3,6 +3,7 @@ class Vehicle {
     this.pos = createVector(x, y);
     this.target = this.pos.copy();
     this.vel = createVector();
+    this.xVel = createVector();
     this.acc = createVector();
     this.maxspeed = 5;
     this.maxforce = 0.3;
@@ -46,8 +47,13 @@ class Vehicle {
     }
     desired.setMag(speed);
     const steer = p5.Vector.sub(desired, this.vel);
+    steer.x = 0;
     steer.limit(this.maxforce);
     return steer;
+  }
+
+  isOnScreen() {
+    return this.pos.x < width && this.pos.x > 0;
   }
 
   fleeScreenForce() {
@@ -61,7 +67,6 @@ class Vehicle {
 
   flee(target) {
     const desired = p5.Vector.sub(target, this.pos);
-    const d = desired.mag();
     const dx = abs(target.x - this.pos.x);
     const dy = abs(target.y - this.pos.y);
     const tdy = abs(target.y - this.target.y);
@@ -74,6 +79,7 @@ class Vehicle {
       desired.setMag(this.maxspeed);
       desired.mult(-1);
       const steer = p5.Vector.sub(desired, this.vel);
+      steer.x = 0;
       steer.limit(this.maxforce);
       return steer;
     } else {
@@ -82,21 +88,29 @@ class Vehicle {
   }
 
   applyForce(f) {
-    this.acc.add(createVector(0, f.y));
+    this.acc.add(f);
   }
 
   update(begin, end) {
-    this.pos.add(this.vel);
+    this.pos.y += this.vel.y;
+    this.pos.x += this.xVel.x;
+    this.target.x += this.xVel.x;
+    this.edges(this.pos);
+    this.edges(this.target);
     begin.add(this.vel);
     end.add(this.vel);
     this.vel.add(this.acc);
+    this.xVel.x += this.acc.x;
+    this.xVel.limit(this.maxspeed);
+    this.vel.limit(this.maxspeed);
     this.acc.mult(0);
   }
 
-  show() {
-    stroke(0, 255, 0);
-    strokeWeight(3);
-    point(this.pos.x, this.pos.y);
-    // line(this.begin.x, this.begin.y, this.end.x, this.end.y);
+  edges(val) {
+    if (val.x > width) {
+      val.x = 0 + (val.x - width);
+    } else if (val.x < 0) {
+      val.x = width + val.x;
+    }
   }
 }

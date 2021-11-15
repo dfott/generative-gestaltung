@@ -1,39 +1,7 @@
 let font;
 let points;
-let vehicles = [];
 let letters = [];
 
-const words = [
-  "click",
-  "perlin",
-  "Lorem",
-  "ipsum",
-  "dolor",
-  "sit",
-  "amet",
-  "consectetur",
-  "adipiscing",
-  "elit",
-  "Suspendisse",
-  "porta",
-  "nec",
-  "lacus",
-  "a",
-  "laoreet",
-  "Quisque",
-  "ac",
-  "malesuada",
-  "tellus",
-  "Etiam",
-  "iaculis",
-  "sagittis",
-  "ante",
-  "non",
-  "placerat",
-  "felis",
-  "gravida",
-  "eu",
-];
 let currentWordIndex = 0;
 
 let nullVector;
@@ -53,21 +21,15 @@ function mousePressed() {
   }
 }
 
-let conns = [];
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(51);
   textFont(font);
   textSize(192);
-  fill(255);
-  noStroke();
 
   nullVector = createVector(0, 0);
 
   letters = createLetters(words[currentWordIndex]);
-  conns.push(new Connection(createVector(200, 200), createVector(200, 230)));
-  conns.push(new Connection(createVector(200, 250), createVector(200, 280)));
 }
 
 function createLetters(text) {
@@ -110,10 +72,14 @@ function fleeLetters() {
   }
 }
 
+let xoff = 0;
+
 function draw() {
   background(51);
   fleeLetters();
   letters.forEach((letter) => {
     letter.show(isArriving);
+    letter.applyForce(createVector(map(noise(xoff), 0, 1, -0.3, 0.3), 0));
   });
+  xoff += 0.01;
 }
