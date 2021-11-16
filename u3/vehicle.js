@@ -1,8 +1,11 @@
+/**
+ * Base Class which implements a basic steering behavior, which will be used to move the connections
+ */
 class Vehicle {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.target = this.pos.copy();
-    this.vel = createVector();
+    this.yVel = createVector();
     this.xVel = createVector();
     this.acc = createVector();
     this.maxspeed = 5;
@@ -11,9 +14,13 @@ class Vehicle {
     this.up = false;
   }
 
+  /**
+   * Starts the process of fleeing the screen
+   * @param {boolean} flee
+   */
   fleeScreen(flee) {
     this.fleeingScreen = flee;
-    this.vel = createVector();
+    this.yVel = createVector();
     this.acc = createVector();
   }
 
@@ -32,9 +39,9 @@ class Vehicle {
       flee.mult(5);
       this.applyForce(flee);
     } else {
-      const fleeScreen = this.fleeScreenForce();
-      fleeScreen.mult(1);
-      this.applyForce(fleeScreen);
+      const fleeScreenForce = this.fleeScreenForce();
+      fleeScreenForce.mult(1);
+      this.applyForce(fleeScreenForce);
     }
   }
 
@@ -46,14 +53,10 @@ class Vehicle {
       speed = map(d, 0, 100, 0, this.maxspeed);
     }
     desired.setMag(speed);
-    const steer = p5.Vector.sub(desired, this.vel);
+    const steer = p5.Vector.sub(desired, this.yVel);
     steer.x = 0;
     steer.limit(this.maxforce);
     return steer;
-  }
-
-  isOnScreen() {
-    return this.pos.x < width && this.pos.x > 0;
   }
 
   fleeScreenForce() {
@@ -78,7 +81,7 @@ class Vehicle {
     ) {
       desired.setMag(this.maxspeed);
       desired.mult(-1);
-      const steer = p5.Vector.sub(desired, this.vel);
+      const steer = p5.Vector.sub(desired, this.yVel);
       steer.x = 0;
       steer.limit(this.maxforce);
       return steer;
@@ -92,17 +95,17 @@ class Vehicle {
   }
 
   update(begin, end) {
-    this.pos.y += this.vel.y;
+    this.pos.y += this.yVel.y;
     this.pos.x += this.xVel.x;
     this.target.x += this.xVel.x;
     this.edges(this.pos);
     this.edges(this.target);
-    begin.add(this.vel);
-    end.add(this.vel);
-    this.vel.add(this.acc);
+    begin.add(this.yVel);
+    end.add(this.yVel);
+    this.yVel.add(this.acc);
     this.xVel.x += this.acc.x;
     this.xVel.limit(this.maxspeed);
-    this.vel.limit(this.maxspeed);
+    this.yVel.limit(this.maxspeed);
     this.acc.mult(0);
   }
 

@@ -1,3 +1,6 @@
+/**
+ * Base Class used to display a single letter
+ */
 class Letter {
   constructor(points, color) {
     this.connections = [];
@@ -38,46 +41,5 @@ class Letter {
         c.show();
       }
     });
-  }
-}
-
-class Connection {
-  constructor(begin, end) {
-    this.begin = begin.copy();
-    this.end = end.copy();
-
-    const dVec = p5.Vector.sub(end, begin);
-    this.dir = dVec.copy();
-    this.dir.mult(0.5);
-    dVec.mult(0.5);
-    const center = p5.Vector.add(begin, dVec);
-    this.vehicle = new Vehicle(center.x, center.y);
-  }
-
-  fleeScreen(fleeScreen) {
-    this.vehicle.fleeScreen(fleeScreen);
-  }
-
-  applyForce(f) {
-    this.vehicle.applyForce(f);
-  }
-
-  behaviors() {
-    this.vehicle.behaviors();
-  }
-
-  isOffscreen() {
-    return this.vehicle.isOffscreen();
-  }
-
-  update() {
-    this.vehicle.update(this.begin, this.end);
-  }
-
-  show() {
-    strokeWeight(3);
-    const begin = p5.Vector.sub(this.vehicle.pos, this.dir);
-    const end = p5.Vector.add(this.vehicle.pos, this.dir);
-    line(begin.x, begin.y, end.x, end.y);
   }
 }
