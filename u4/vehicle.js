@@ -1,19 +1,19 @@
 class Vehicle {
   constructor() {
-    this.speed = 0;
-    this.vel = 0;
-    this.acc = 0;
-    // this.maxSpeed = 1000;
+    this.speed = createVector();
+    this.vel = createVector();
+    this.acc = createVector();
+    this.maxSpeed = 80000;
   }
 
   applyForce(f) {
-    this.acc += f;
+    this.acc.add(f);
   }
 
   update() {
-    this.speed += this.vel;
-    this.vel += this.acc;
-    // constrain(this.vel, 0, this.maxSpeed);
-    this.acc = 0;
+    this.speed.add(this.vel);
+    this.vel.add(this.acc);
+    this.vel.limit(this.maxSpeed);
+    this.acc.mult(0);
   }
 }

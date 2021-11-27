@@ -55,17 +55,13 @@ class Dashboard {
     translate(-675, 170);
     push();
     rotate(-55);
-    // fill(color(84, 83, 83));
     fill(this.colors.speedoOuter2.current);
     ellipse(25, -70, r * 2 + 75, r * 2 + 200);
-    // fill(color(192, 192, 192));
     fill(this.colors.speedoOuter.current);
     ellipse(5, -65, r * 2 + 65, r * 2 + 185);
-    // fill("black");
     fill(this.colors.speedoShadow.current);
     ellipse(0, -75, r * 2 + 25, r * 2 + 150);
     pop();
-    // fill(51);
     fill(this.colors.speedoBackground.current);
     ellipse(0, 0, r * 2, r * 2);
     strokeWeight(10);
@@ -91,7 +87,6 @@ class Dashboard {
     vertex(-r + 20, 0.25);
     vertex(-r + 20, -0.25);
     endShape(CLOSE);
-    // line(0, 0, -r + 10, 0);
     pop();
     noFill();
     textSize(100);
@@ -112,16 +107,12 @@ class Dashboard {
     push();
     const r = 350;
     translate(0, 50);
-    // fill(color(84, 83, 83));
     fill(this.colors.speedoOuter2.current);
     ellipse(0, -50, r * 2 + 85, r * 2 + 110);
-    // fill(color(192, 192, 192));
     fill(this.colors.speedoOuter.current);
     ellipse(0, -25, r * 2 + 85, r * 2 + 110);
-    // fill("black");
     fill(this.colors.speedoShadow.current);
     ellipse(0, -25, r * 2 + 50, r * 2 + 75);
-    // fill(51);
     fill(this.colors.speedoBackground.current);
     ellipse(0, 0, r * 2, r * 2);
     strokeWeight(10);
@@ -131,7 +122,6 @@ class Dashboard {
     rotate(
       map(main + sub / speedoConf.subDivider, 0, speedoConf.maxVal, -25, 205)
     );
-    // line(0, 0, -r + 10, 0);
     stroke(12);
     strokeWeight(12);
     beginShape();
@@ -160,8 +150,6 @@ class Dashboard {
     textAlign(CENTER);
     noStroke();
     fill(51);
-    // ellipse(0, 0, 250, 250);
-    // stroke(color(120, 0, 0));
     fill(this.mainColor);
     textFont(speedoFont);
     text(main, -10, 50);
@@ -182,25 +170,25 @@ class Dashboard {
     translate(675, 170);
     push();
     rotate(55);
-    // fill(color(84, 83, 83));
     fill(this.colors.speedoOuter2.current);
     ellipse(-25, -70, r * 2 + 75, r * 2 + 200);
-    // fill(color(192, 192, 192));
     fill(this.colors.speedoOuter.current);
     ellipse(-5, -65, r * 2 + 65, r * 2 + 185);
-    // fill("black");
     fill(this.colors.speedoShadow.current);
     ellipse(0, -75, r * 2 + 25, r * 2 + 150);
     pop();
-    // fill(51);
     fill(this.colors.speedoBackground.current);
     ellipse(0, 0, r * 2, r * 2);
-    this.drawTicks(0, 0, r, speedoConf.maxVal, speedoConf.tickDiff, 5);
+    this.drawTicks(0, 0, r, speedoConf.maxVal, speedoConf.tickDiff, 5, true);
     this.drawNumbers(0, 0, r, speedoConf.maxVal, speedoConf.tickDiff, 5);
     strokeWeight(10);
     push();
+    let min = -25;
+    if (vehicle.vel.x > 10000) {
+      min = 160;
+    }
     rotate(
-      map(main + sub / speedoConf.subDivider, 0, speedoConf.maxVal, -25, 205)
+      map(main + sub / speedoConf.subDivider, 0, speedoConf.maxVal, min, 205)
     );
     stroke(12);
     strokeWeight(12);
@@ -218,7 +206,6 @@ class Dashboard {
     vertex(-r + 20, 0.25);
     vertex(-r + 20, -0.25);
     endShape(CLOSE);
-    // line(0, 0, -r + 10, 0);
     pop();
     noFill();
     textSize(100);
@@ -226,7 +213,6 @@ class Dashboard {
     fill(51);
     stroke(11);
     ellipse(0, 0, 200, 200);
-    // stroke();
     fill(this.mainColor);
     textFont(speedoFont);
     text(main, 0, 0);
@@ -254,7 +240,7 @@ class Dashboard {
     }
   }
 
-  drawTicks(x, y, r, step, tickDiff, tickDiff2) {
+  drawTicks(x, y, r, step, tickDiff, tickDiff2, showRedTicks) {
     let count = 0;
     for (let i = -25; i <= 207; i += 230 / step) {
       push();
@@ -263,10 +249,13 @@ class Dashboard {
       stroke("white");
       rotate(i);
 
+      if (showRedTicks && i > 165) {
+        stroke(this.colors.redTicks.current);
+      }
+
       if (count % tickDiff === 0 || count === 0) {
         line(-r + 2, -4, -r + 40, -4);
         line(-r + 2, 4, -r + 40, 4);
-        // line(-r - 2, 0, -r + 40, 0);
       } else if (tickDiff2 && count % tickDiff2 === 0) {
         line(-r + 2, -4, -r + 30, -4);
         line(-r + 2, 4, -r + 30, 4);

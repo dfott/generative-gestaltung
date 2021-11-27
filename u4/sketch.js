@@ -1,7 +1,6 @@
 // Bild https://pixabay.com/photos/mercedes-car-auto-luxury-vehicle-1229233/
 
 let date;
-let img;
 
 let perlinFont;
 let speedoFont;
@@ -12,19 +11,17 @@ let pedal;
 
 let allColors;
 
-let slider;
-
 let currentHour;
 
 let vehicle;
 
+let isAccelerating = false;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  pixelDensity(2);
-  date = new Date(Date.parse("2021-01-01T08:15:12Z"));
-  img = loadImage("assets/image.jpg");
-  angleMode(DEGREES);
   background(255);
+  pixelDensity(1);
+  angleMode(DEGREES);
 
   allColors = {
     dashboard: {
@@ -33,14 +30,22 @@ function setup() {
       speedoOuter2: new CustomColor(color(84, 83, 83)),
       speedoShadow: new CustomColor(color("black")),
       speedoBackground: new CustomColor(color(51)),
+      redTicks: new CustomColor(color(250, 0, 0), -10, color(80, 0, 0)),
     },
     background: {
       gradientFrom: new CustomColor(color(20), 20),
       gradientTo: new CustomColor(color(180)),
     },
+    indicators: {
+      inactive: new CustomColor(color(229, 255, 0, 1)),
+      active: new CustomColor(color(229, 255, 0, 255), -5),
+    },
   };
 
-  indicators = new Indicators(color(229, 255, 0, 255), color(229, 255, 0, 1));
+  indicators = new Indicators(
+    allColors.indicators.active.current,
+    allColors.indicators.inactive.current
+  );
   indicators.turnOnIndicatorAnimation();
   dashboard = new Dashboard(allColors.dashboard);
   vehicle = new Vehicle();
@@ -48,18 +53,14 @@ function setup() {
   perlinFont = loadFont("assets/Comforter-Regular.ttf");
   speedoFont = loadFont("assets/BebasNeue-Regular.ttf");
 
-  slider = createSlider(0, 24, 1);
-  slider.position(10, 10);
   date = new Date();
-  // date.setHours(slider.value());
   currentHour = date.getHours();
   changeColorsInitial();
 }
 
 function draw() {
   date = new Date();
-  date.setMilliseconds(date.getMilliseconds() + vehicle.speed);
-  // date.setHours(slider.value());
+  date.setMilliseconds(date.getMilliseconds() + vehicle.speed.x);
   dashboard.setTime(date);
 
   if (currentHour !== date.getHours()) {
@@ -69,7 +70,14 @@ function draw() {
 
   vehicle.update();
   if (isAccelerating) {
-    vehicle.applyForce(100);
+    vehicle.applyForce(createVector(100, 0));
+  } else {
+    const c = 0.5;
+    const friction = vehicle.vel.copy();
+    friction.mult(-1);
+    friction.normalize;
+    friction.mult(c);
+    vehicle.applyForce(friction);
   }
 
   drawBackground();
@@ -86,8 +94,6 @@ function draw() {
   dashboard.drawRightSpeedo();
 }
 
-let isAccelerating = false;
-
 function mousePressed() {
   if (pedal.isCursorInsidePedal()) {
     isAccelerating = true;
@@ -99,13 +105,13 @@ function mouseReleased() {
 }
 
 function drawBackground() {
-  let c1 = allColors.background.gradientFrom.current;
-  let c2 = allColors.background.gradientTo.current;
+  const from = allColors.background.gradientFrom.current;
+  const to = allColors.background.gradientTo.current;
   // Draw gradient background (black -> white)
   for (let y = -500; y < height; y++) {
-    n = map(y, 0, height, 0, 1);
-    let newc = lerpColor(c1, c2, n);
-    stroke(newc);
+    const val = map(y, 0, height, 0, 1);
+    let gradient = lerpColor(from, to, val);
+    stroke(gradient);
     line(0, y + 500, width, y);
   }
 
@@ -124,7 +130,7 @@ function changeColors(h) {
   if (h >= 14) {
     iterateOverAllColors((customCol) => customCol.makeDarker());
   } else if (h >= 0) {
-    iterateOverAllColors((customCol) => customCol.makeLighter());
+    iterateOverAllColors((customCol) => customCol.makeBrighter());
   }
 }
 
@@ -145,9 +151,14 @@ function changeColorsInitial() {
   });
 }
 
+/**
+ * Returns a function, that makes a CustomColor x-times brighter and y-times darker, depending on the current time, to set the initital colors
+ * @param {number} hour - the current hour
+ * @returns {function}
+ */
 function getTransformFun(hour) {
   if (hour >= 14 && hour <= 24) {
-    d = hour - 14;
+    let d = hour - 14;
     transformFun = (customCol) => {
       for (let i = 0; i < d; i++) {
         customCol.makeDarker();
@@ -160,7 +171,7 @@ function getTransformFun(hour) {
         customCol.makeDarker();
       }
       for (let i = 0; i < d; i++) {
-        customCol.makeLighter();
+        customCol.makeBrighter();
       }
     };
   }
