@@ -1,4 +1,13 @@
-// Bild https://pixabay.com/photos/mercedes-car-auto-luxury-vehicle-1229233/
+/**
+ * Quellen:
+ * - Grundlagenwissen für die Entwicklung des Tachos
+ *   Daniel Shiffman: Nature of Code Chapter 3. Oscillation
+ *   Buch aus https://natureofcode.com/book/chapter-3-oscillation/
+ *
+ * Fonts:
+ *  - Comforter: https://fonts.google.com/specimen/Comforter?query=comforter
+ *  - Bebas: https://fonts.google.com/specimen/Bebas+Neue?query=bebas
+ */
 
 let date;
 
@@ -38,7 +47,11 @@ function setup() {
     },
     indicators: {
       inactive: new CustomColor(color(229, 255, 0, 1)),
-      active: new CustomColor(color(229, 255, 0, 255), -5),
+      active: new CustomColor(
+        color(229, 255, 0, 255),
+        -5,
+        color(209, 235, 0, 235)
+      ),
     },
   };
 
@@ -50,6 +63,7 @@ function setup() {
   dashboard = new Dashboard(allColors.dashboard);
   vehicle = new Vehicle();
   pedal = new Pedal();
+
   perlinFont = loadFont("assets/Comforter-Regular.ttf");
   speedoFont = loadFont("assets/BebasNeue-Regular.ttf");
 

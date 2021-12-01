@@ -242,14 +242,14 @@ class Dashboard {
 
   drawTicks(x, y, r, step, tickDiff, tickDiff2, showRedTicks) {
     let count = 0;
-    for (let i = -25; i <= 207; i += 230 / step) {
+    for (let angle = -25; angle <= 207; angle += 230 / step) {
       push();
       translate(x, y);
       strokeWeight(4);
       stroke("white");
-      rotate(i);
+      rotate(angle);
 
-      if (showRedTicks && i > 165) {
+      if (showRedTicks && angle > 165) {
         stroke(this.colors.redTicks.current);
       }
 
