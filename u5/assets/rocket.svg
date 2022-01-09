@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg width="72.694mm" height="297mm" clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" version="1.1" viewBox="0 0 7269 29700" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+    .fil9 {fill:#B2B3B3}
+    .fil7 {fill:url(#j)}
+    .fil2 {fill:url(#k)}
+    .fil3 {fill:url(#a)}
+    .fil5 {fill:url(#l)}
+    .fil0 {fill:url(#m)}
+    .fil8 {fill:url(#n)}
+    .fil1 {fill:url(#b)}
+    .fil4 {fill:url(#o)}
+    .fil6 {fill:url(#p)}
+  </style>
+  <linearGradient id="j" x1="4391.1" x2="4827.3" y1="20550" y2="20550" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#5B5B5B" offset="0"/>
+   <stop stop-color="#D9DADA" offset=".50196"/>
+   <stop stop-color="#2B2A29" offset="1"/>
+  </linearGradient>
+  <linearGradient id="k" x1="1356" x2="6138.4" y1="8404.1" y2="8404.1" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#D9DADA" offset="0"/>
+   <stop stop-color="#FEFEFE" offset=".50196"/>
+   <stop stop-color="#D9DADA" offset="1"/>
+  </linearGradient>
+  <linearGradient id="a" y1="50%" y2="50%">
+   <stop stop-color="#E31E24" offset="0"/>
+   <stop stop-color="#EF7F1A" offset=".50196"/>
+   <stop stop-color="#B52322" offset="1"/>
+  </linearGradient>
+  <linearGradient id="l" x1="2957.9" x2="4536.5" y1="12525" y2="12525" gradientUnits="userSpaceOnUse" xlink:href="#a">
+  </linearGradient>
+  <linearGradient id="m" x1=".01" x2="7269.4" y1="2675.8" y2="2675.8" gradientUnits="userSpaceOnUse" xlink:href="#a">
+  </linearGradient>
+  <linearGradient id="n" x1="4609.2" x2="4609.2" y1="29860" y2="29424" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#434242" offset="0"/>
+   <stop stop-color="#D9DADA" offset=".50196"/>
+   <stop stop-color="#2B2A29" offset="1"/>
+  </linearGradient>
+  <linearGradient id="b" x1="3634.7" x2="3634.7" y1="9110.7" y2="1841.3" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#C5C6C6" offset="0"/>
+   <stop stop-color="#EBECEC" offset=".50196"/>
+   <stop stop-color="#C5C6C6" offset="1"/>
+  </linearGradient>
+  <linearGradient id="o" x1="3747.2" x2="3747.2" y1="13989" y2="9206.1" gradientUnits="userSpaceOnUse" xlink:href="#b">
+  </linearGradient>
+  <radialGradient id="p" cy="50.001%">
+   <stop stop-color="#727271" offset="0"/>
+   <stop stop-color="#434242" offset="1"/>
+  </radialGradient>
+ </defs>
+    <polygon class="fil0" points="3635 0 7269 5352 0 5352"/>
+    <path class="fil1" d="m3635 6448c-2008 0-3635-435-3635-972s1627-972 3635-972c2007 0 3634 435 3634 972s-1627 972-3634 972z"/>
+   <path class="fil2" d="m6138 11628h-4782v-5809c0-353 1071-639 2391-639 1321 0 2391 286 2391 639v5809z"/>
+   <path class="fil3" d="m1356 7150v-682c0-353 1071-639 2391-639 1321 0 2391 286 2391 639v682c-228-297-1212-521-2391-521s-2163 224-2391 521z"/>
+   <path class="fil3" d="m1356 8932v-682c0-353 1071-639 2391-639 1321 0 2391 286 2391 639v682c-228-297-1212-521-2391-521s-2163 224-2391 521z"/>
+   <path class="fil3" d="m1356 10714v-682c0-353 1071-639 2391-639 1321 0 2391 286 2391 639v682c-228-297-1212-521-2391-521s-2163 224-2391 521z"/>
+   <path class="fil4" d="m3747 12237c-1320 0-2391-287-2391-640s1071-639 2391-639c1321 0 2391 286 2391 639s-1070 640-2391 640z"/>
+   <path class="fil5" d="m4537 13589h-1579v-1917c0-117 353-211 789-211s790 94 790 211v1917z"/>
+   <path class="fil6" d="m3747 13796c-436 0-789-94-789-211 0-116 353-211 789-211s790 95 790 211c0 117-354 211-790 211z"/>
+    <path class="fil7" d="m4827 29648h-436v-18139c0-32 98-58 218-58 121 0 218 26 218 58v18139z"/>
+    <path class="fil8" d="m4609 29700c-120 0-218-26-218-58 0-33 98-59 218-59 121 0 218 26 218 59 0 32-97 58-218 58z"/>
+   <path class="fil9" d="m3642 13602c-5-50 135-47 153 0 136 356 271 729 271 1109 0 343-167 665-271 991-120 378-400 724-400 1121 0 352 314 637 400 979 12 49-128 44-153 0-173-307-400-627-400-979 0-397 280-743 400-1121 104-326 271-648 271-991 0-380-231-730-271-1109z"/>
+</svg>
